@@ -1,0 +1,123 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 7
+            },
+            {
+              "triggerAtHour": 12
+            },
+            {
+              "triggerAtHour": 18
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "5df32922-e7c5-4b52-b2d1-3e794afbcdc7",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1-MINI"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "Pretend you are me: an AI Engineer with hands-on experience in Data Engineering and AI-powered Web Development.\nGenerate a highly engaging, insightful LinkedIn post that reflects my real-world journey, lessons learned, and evolving perspective in these fields.\n\nThe post should:\n\nGo straight into the content with a strong hook in the first line (no preambles, no introductions)\n\nSound human, reflective, and experience-driven—not motivational fluff\n\nBlend technical depth with storytelling (trade-offs, failures, breakthroughs, mindset shifts)\n\nHighlight intersections between Data Engineering, AI systems, and modern Web Development where relevant\n\nShare a clear takeaway or thought that sparks discussion among engineers and builders\n\nUse short and long paragraphs intentionally to improve readability and engagement\n\nAvoid emojis, bullet points, hashtags, markdown, or bold text\n\nNever mention that you are an AI or that this content was generated\n\nTone:\n\nConfident but humble\n\nCurious, honest, and slightly opinionated\n\nWritten for engineers, founders, and tech leaders on LinkedIn\n\nLength:\n\n2-4 paragraph LinkedIn post with elaboration where it adds value\n\nEnd with a subtle reflective or thought-provoking closing line that invites engagement without explicitly asking a question."
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "a9cde24a-8441-43b0-87a2-ce39f406a558",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "K1ESAUb6prc7kTV7",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "person": "fljJpKEZrc",
+        "text": "={{ $json.output[0].content[0].text }}",
+        "additionalFields": {
+          "visibility": "PUBLIC"
+        }
+      },
+      "type": "n8n-nodes-base.linkedIn",
+      "typeVersion": 1,
+      "position": [
+        576,
+        0
+      ],
+      "id": "e6a8d1ec-cb66-44d6-9bca-6dcd9585d263",
+      "name": "Create a post",
+      "credentials": {
+        "linkedInOAuth2Api": {
+          "id": "U3A6g5tFUw3b9BmE",
+          "name": "LinkedIn account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Create a post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "724b9c9f-e5c1-40a0-acaa-c071c8db718e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "bc51b907b4a5e878273bc1bb761c74a119dd57088ba4e70c76e9ef8a0650e38c"
+  },
+  "id": "b5aWP7sKbru6HheH",
+  "tags": []
+}
